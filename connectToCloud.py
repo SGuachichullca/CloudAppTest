@@ -18,6 +18,7 @@ chrome_options.set_capability("browserVersion", "104")
 chrome_options.set_capability("platformName", "Windows 11")
 
 driver = webdriver.Remote(
+    command_executor='https://cloud-based-python-application-test.onrender.com',
     options=chrome_options,\
     
     )
