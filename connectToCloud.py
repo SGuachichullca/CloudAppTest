@@ -26,6 +26,7 @@ def main():
         time.sleep(6)
         driver.quit()
         #print(driver.page_source)
+        print('Done.')
         return('Done.')
     
     except Exception as e:
