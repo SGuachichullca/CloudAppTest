@@ -10,25 +10,22 @@ import os
 from pyppeteer import launch
 
 app = Flask(__name__)
-chrome_options = Options()
+chrome_options = webdriver.ChromeOptions()
 
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
     try:
-        chrome_options.add_experimental_option("detach", True)
+        chrome_options.binary_location=os.environ.get('GOOGLE_CHROME_BIN')
         #chrome_options.add_argument('--headless')
-        chrome_options.add_argument('--start-minimized')  # Start Chrome maximized (full screen)
-        chrome_options.add_argument('--disable-infobars')  # Disable the "Chrome is being controlled by automated test software" notification
-        chrome_options.set_capability("browserVersion", "67")
-        chrome_options.set_capability("platformName", "Windows 10")
-
-        global driver
-        driver = webdriver.Remote(command_executor='https://connecttocloud-5996e238115e.herokuapp.com/',options=chrome_options)
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        chrome_options.add_argument('--no-sandbox')
+        driver = webdriver.Chrome(service=os.environ.get('CHROMEDRIVER_PATH'), options=chrome_options)
 
         driver.get('https://stackoverflow.com/questions/71821803/requests-html-render-returning-winerror-14001-on-vscode')
         time.sleep(5)
         driver.quit()
+        #print(driver.page_source)
         return('Done.')
     
     except Exception as e:
