@@ -12,16 +12,21 @@ from pyppeteer import launch
 app = Flask(__name__)
 @app.route('/')
 async def main():
-    # launch chromium browser in the background
-    browser = await launch()
-    # open a new tab in the browser
-    page = await browser.newPage()
-    # add URL to a new page and then open it
-    await page.goto("https://www.python.org/")
-    # create a screenshot of the page and save it
-    await page.screenshot({os.path.dirname(os.path.realpath(__file__)) : "python.png"})
-    # close the browser
-    await browser.close()
+    try:
+        # launch chromium browser in the background
+        browser = await launch()
+        # open a new tab in the browser
+        page = await browser.newPage()
+        # add URL to a new page and then open it
+        await page.goto("https://www.python.org/")
+        # create a screenshot of the page and save it
+        await page.screenshot({f'{os.path.dirname(os.path.realpath(__file__))}\\' : "python.png"})
+        # close the browser
+        await browser.close()
+        return('Screenshot taken.')
+    
+    except Exception as e:
+        return(f"Error: {str(e)}")
 
 asyncio.get_event_loop().run_until_complete(main())
 
