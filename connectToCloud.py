@@ -38,7 +38,7 @@ def message():
     txt = 'Server Ran Program Successfully'
     print(txt)
     return(txt)
-message
+message()
 #if __name__ == '__main__':
 '''    app.secret_key = '123123'
     app.debug = True
