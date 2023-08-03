@@ -1,1 +1,1 @@
-web uvicorn connectToCloud:app --workers 4 
+web: gunicorn hello:app

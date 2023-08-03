@@ -7,11 +7,14 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 
 app = Flask(__name__)
-@app.route('/', methods = ['GET', 'POST'])
+@app.route('/')
 def message():
     txt = 'Server Ran Program Successfully'
     print(txt)
     return(txt)
+
+if __name__ == '__main__':
+    app.run()
 #message()
 '''#def test():
 #   return('test')
