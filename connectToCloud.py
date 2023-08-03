@@ -10,25 +10,30 @@ import os
 from pyppeteer import launch
 
 app = Flask(__name__)
-@app.route('/')
-async def main():
+chrome_options = Options()
+
+
+@app.route('/', methods=['GET', 'POST'])
+def main():
     try:
-        # launch chromium browser in the background
-        browser = await launch()
-        # open a new tab in the browser
-        page = await browser.newPage()
-        # add URL to a new page and then open it
-        await page.goto("https://www.python.org/")
-        # create a screenshot of the page and save it
-        await page.screenshot({f'{os.path.dirname(os.path.realpath(__file__))}\\' : "python.png"})
-        # close the browser
-        await browser.close()
-        return('Screenshot taken.')
+        chrome_options.add_experimental_option("detach", True)
+        #chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--start-minimized')  # Start Chrome maximized (full screen)
+        chrome_options.add_argument('--disable-infobars')  # Disable the "Chrome is being controlled by automated test software" notification
+        
+        global driver
+        driver = webdriver.Chrome(options=chrome_options)
+
+        driver.get('https://stackoverflow.com/questions/71821803/requests-html-render-returning-winerror-14001-on-vscode')
+        time.sleep(5)
+        driver.quit()
+        return('Done.')
     
     except Exception as e:
-        return(f"Error: {str(e)}")
+        # Handle any exceptions that occur
+        return f"Error: {str(e)}"
 
-asyncio.get_event_loop().run_until_complete(main())
+
 
 if __name__ == '__main__':
     app.run()
