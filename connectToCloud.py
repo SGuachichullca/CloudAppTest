@@ -20,7 +20,9 @@ def main():
         #chrome_options.add_argument('--headless')
         chrome_options.add_argument('--start-minimized')  # Start Chrome maximized (full screen)
         chrome_options.add_argument('--disable-infobars')  # Disable the "Chrome is being controlled by automated test software" notification
-        
+        chrome_options.set_capability("browserVersion", "67")
+        chrome_options.set_capability("platformName", "Windows 10")
+
         global driver
         driver = webdriver.Remote(command_executor='https://connecttocloud-5996e238115e.herokuapp.com/',options=chrome_options)
 
