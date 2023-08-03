@@ -12,7 +12,7 @@ import time
 #   return('test')
 
 #ef getVidTitle():
-chrome_options = Options()
+'''chrome_options = Options()
 global driver   
 chrome_options.set_capability("browserVersion", "104")
 chrome_options.set_capability("platformName", "Windows 11")
@@ -33,8 +33,11 @@ try:
     print('Done.')
 
 except Exception as e:
-    print(f"Error: {str(e)}")
-
+    print(f"Error: {str(e)}")'''
+def message():
+    txt = 'Server Ran Program Successfully'
+    print(txt)
+    return(txt)
 #if __name__ == '__main__':
     app.secret_key = '123123'
     app.debug = True
