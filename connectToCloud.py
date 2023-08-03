@@ -5,13 +5,25 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import time
+import asyncio
+import os
+from pyppeteer import launch
 
 app = Flask(__name__)
 @app.route('/')
-def message():
-    txt = 'Server Ran Program Successfully'
-    print(txt)
-    return(txt)
+async def main():
+    # launch chromium browser in the background
+    browser = await launch()
+    # open a new tab in the browser
+    page = await browser.newPage()
+    # add URL to a new page and then open it
+    await page.goto("https://www.python.org/")
+    # create a screenshot of the page and save it
+    await page.screenshot({os.path.dirname(os.path.realpath(__file__)) : "python.png"})
+    # close the browser
+    await browser.close()
+
+asyncio.get_event_loop().run_until_complete(main())
 
 if __name__ == '__main__':
     app.run()
