@@ -23,7 +23,7 @@ def main():
         driver = webdriver.Chrome(service=os.environ.get('CHROMEDRIVER_PATH'), options=chrome_options)
 
         driver.get('https://stackoverflow.com/questions/71821803/requests-html-render-returning-winerror-14001-on-vscode')
-        time.sleep(5)
+        time.sleep(6)
         driver.quit()
         #print(driver.page_source)
         return('Done.')
