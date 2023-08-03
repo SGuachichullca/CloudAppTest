@@ -22,7 +22,7 @@ def main():
         chrome_options.add_argument('--disable-infobars')  # Disable the "Chrome is being controlled by automated test software" notification
         
         global driver
-        driver = webdriver.Chrome(options=chrome_options)
+        driver = webdriver.Remote(command_executor='https://connecttocloud-5996e238115e.herokuapp.com/',options=chrome_options)
 
         driver.get('https://stackoverflow.com/questions/71821803/requests-html-render-returning-winerror-14001-on-vscode')
         time.sleep(5)
