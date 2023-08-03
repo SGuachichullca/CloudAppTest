@@ -6,13 +6,18 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import time
 
-#app = Flask(__name__)
-#@app.route('/', methods = ['GET', 'POST'])
-#def test():
+app = Flask(__name__)
+@app.route('/', methods = ['GET', 'POST'])
+def message():
+    txt = 'Server Ran Program Successfully'
+    print(txt)
+    return(txt)
+#message()
+'''#def test():
 #   return('test')
 
 #ef getVidTitle():
-'''chrome_options = Options()
+chrome_options = Options()
 global driver   
 chrome_options.set_capability("browserVersion", "104")
 chrome_options.set_capability("platformName", "Windows 11")
@@ -33,14 +38,11 @@ try:
     print('Done.')
 
 except Exception as e:
-    print(f"Error: {str(e)}")'''
-def message():
-    txt = 'Server Ran Program Successfully'
-    print(txt)
-    return(txt)
-message()
-#if __name__ == '__main__':
-'''    app.secret_key = '123123'
-    app.debug = True
-    app.run(host='192.168.1.214', port='5000')'''
+    print(f"Error: {str(e)}")
 
+#if __name__ == '__main__':
+    app.secret_key = '123123'
+    app.debug = True
+    app.run(host='192.168.1.214', port='5000')
+
+'''
