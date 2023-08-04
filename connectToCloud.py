@@ -12,8 +12,8 @@ import os
 app = Flask(__name__)
 
 chrome_options = webdriver.ChromeOptions()
-driver_path = f'{os.path.dirname(os.path.realpath(__file__))}\\chromedriver-win64\\chromedriver.exe'
-chrome_service = Service(executable_path= driver_path)
+driver_local = f'{os.path.dirname(os.path.realpath(__file__))}\\chromedriver-win64\\chromedriver.exe'
+chrome_service = Service(executable_path = driver_local)
 
 #chrome_service.start()
 
@@ -27,7 +27,9 @@ chrome_options.add_argument("--no-sandbox")
 @app.route("/", methods=["GET", "POST"])
 
 def main():
+    #driver = webdriver.Chrome(service=chrome_service, options=chrome_options, driver_path = driver_path)
     driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
+
     try:
         driver.get("https://stackoverflow.com/")
         src = driver.page_source
