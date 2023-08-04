@@ -12,11 +12,13 @@ import os
 app = Flask(__name__)
 
 chrome_options = webdriver.ChromeOptions()
+driver_path = f'{os.path.dirname(os.path.realpath(__file__))}\\chromedriver-win64\\chromedriver.exe'
+chrome_service = Service(executable_path= driver_path)
 
-chrome_service = Service(executable_path="CHROMEDRIVER_PATH")
+#chrome_service.start()
 
 #chrome_options.capabilities['Google Chrome']
-chrome_options.binary_location = str(os.environ.get("GOOGLE_CHROME_BIN"))
+#chrome_options.binary_location = str(os.environ.get("GOOGLE_CHROME_BIN"))
 #chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
