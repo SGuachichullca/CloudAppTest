@@ -11,29 +11,29 @@ import os
 
 app = Flask(__name__)
 chrome_options = webdriver.ChromeOptions()
-chrome_service = ChromeService(executable_path='CHROMEDRIVER_PATH')
+chrome_service = ChromeService(executable_path="CHROMEDRIVER_PATH")
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route("/", methods=["GET", "POST"])
 
 def main():
     chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-    #chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--disable-dev-shm-usage')
-    chrome_options.add_argument('--no-sandbox')
+    #chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--no-sandbox")
     driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
     try:
-        driver.get('https://stackoverflow.com/')
+        driver.get("https://stackoverflow.com/")
         src = driver.page_source
         driver.quit()
-        print('Done.')
+        print("Done.")
         return(src)
     
     except Exception as e:
         # Handle any exceptions that occur
         return f"Error: {str(e)}"
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run()
 
 #message()
