@@ -11,20 +11,20 @@ import os
 
 app = Flask(__name__)
 
+chrome_options = webdriver.ChromeOptions()
+chrome_service = Service(executable_path="CHROMEDRIVER_PATH")
+
+#chrome_options.capabilities['Google Chrome']
+chrome_options.binary_location = str(os.environ.get("GOOGLE_CHROME_BIN"))
+#chrome_options.add_argument("--headless")
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--no-sandbox")
+
 
 @app.route("/", methods=["GET", "POST"])
 
 def main():
-
-    chrome_options = webdriver.ChromeOptions()
-    chrome_service = Service(executable_path="CHROMEDRIVER_PATH")
-
-    chrome_options.binary_location = str(os.environ.get("GOOGLE_CHROME_BIN"))
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument("--no-sandbox")
-    
-    driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
+    driver = webdriver.Chrome(options=chrome_options)
     try:
         driver.get("https://stackoverflow.com/")
         src = driver.page_source
