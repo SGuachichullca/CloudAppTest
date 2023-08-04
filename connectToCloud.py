@@ -5,7 +5,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import time
-import asyncio
 import os
 from pyppeteer import launch
 
@@ -20,14 +19,14 @@ def main():
         #chrome_options.add_argument('--headless')
         chrome_options.add_argument('--disable-dev-shm-usage')
         chrome_options.add_argument('--no-sandbox')
-        driver = webdriver.Chrome(service=os.environ.get('CHROMEDRIVER_PATH'), options=chrome_options)
+        driver = webdriver.Chrome(service=os.environ.get('CHROMEDRIVER_PATH'), chrome_options=chrome_options)
 
         driver.get('https://stackoverflow.com/questions/71821803/requests-html-render-returning-winerror-14001-on-vscode')
+        src = driver.page_source
         time.sleep(6)
         driver.quit()
-        #print(driver.page_source)
         print('Done.')
-        return('Done.')
+        return(src)
     
     except Exception as e:
         # Handle any exceptions that occur
