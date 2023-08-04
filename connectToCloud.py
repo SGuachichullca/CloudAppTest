@@ -12,7 +12,7 @@ import os
 app = Flask(__name__)
 
 chrome_options = webdriver.ChromeOptions()
-driver_local = f'{os.path.dirname(os.path.realpath(__file__))}\\chromedriver-win64\\chromedriver.exe'
+driver_local = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'chromedriver-win64', 'chromedriver.exe')
 chrome_service = Service(executable_path = driver_local)
 
 #chrome_service.start()
