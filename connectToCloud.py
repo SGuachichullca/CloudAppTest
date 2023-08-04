@@ -4,14 +4,14 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.chrome.service import Service
 
 import time
 import os
 
 app = Flask(__name__)
 chrome_options = webdriver.ChromeOptions()
-chrome_service = ChromeService(executable_path="CHROMEDRIVER_PATH")
+chrome_service = Service("CHROMEDRIVER_PATH")
 
 
 @app.route("/", methods=["GET", "POST"])
