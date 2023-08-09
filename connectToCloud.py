@@ -5,22 +5,28 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.service import Service
+import platform
 
 import time
 import os
 
 app = Flask(__name__)
 
+print(platform.system())
 chrome_options = webdriver.ChromeOptions()
-driver_local = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'chromedriver-linux64', 'chromedriver')
-os.chmod(driver_local, 0o755)
+if platform.system() == "Linux":
+    driver_local = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'chromedriver-linux64', 'chromedriver')
+elif platform.system() == "Windows":
+    driver_local = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'chromedriver-win64', 'chromedriver.exe')
+
+driver_local = os.chmod(driver_local, 0o755)
 chrome_service = Service(executable_path = driver_local)
 
 #chrome_service.start()
 
 #chrome_options.capabilities['Google Chrome']
 chrome_options.binary_location = str(os.environ.get("GOOGLE_CHROME_BIN"))
-#chrome_options.add_argument("--headless")
+chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
 
