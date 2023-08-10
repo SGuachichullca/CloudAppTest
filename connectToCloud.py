@@ -5,14 +5,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 import platform
+import webbrowser
 
 import time
 import os
 
 app = Flask(__name__)
-
-print(platform.system())
-chrome_options = webdriver.ChromeOptions()
 
 driver_path = os.environ.get("CHROMEDRIVER_PATH")
 if platform.system() == "Linux":
@@ -21,7 +19,9 @@ if platform.system() == "Linux":
 else:
     chrome_service = None
 
-chrome_options = Options()
+w = webbrowser.Chrome(str(os.environ.get("GOOGLE_CHROME_BIN")))
+
+chrome_options = webdriver.ChromeOptions()
 chrome_options.binary_location = str(os.environ.get("GOOGLE_CHROME_BIN"))
 chrome_options.add_argument("--headless=new")
 chrome_options.add_argument("--disable-dev-shm-usage")
@@ -30,7 +30,7 @@ chrome_options.add_argument('--window-size=1920,1080')
 chrome_options.add_argument('--start-minimized')  
 chrome_options.add_argument('--disable-infobars')
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET"])
 
 def main():
     driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
@@ -45,35 +45,37 @@ def main():
         print("Done.")
         return(src)'''
         
+        #Opens fires.fdnycloud.org.
         driver.get('https://fires.fdnycloud.org/CitizenAccess/Cap/CapHome.aspx?module=BFP&TabName=BFP')
 
+        #Sends violation number stored in the key parameter into the fdnycloud.org violations search and returns the associated record.
         search_bar = driver.find_element(By.NAME, "ctl00$PlaceHolderMain$generalSearchForm$txtGSPermitNumber")
         search_bar.click()
         search_bar.send_keys(VONum)
         search_bar.send_keys(Keys.ENTER)
-        #actions.click(search_bar).send_keys(VONum).send_keys(Keys.ENTER).perform()
         time.sleep(3)
 
-        #record_address = driver.find_element(By.CLASS_NAME, "NotBreakWord").text
-        #print(record_address.text)
-        #rec_url = str(driver.current_url)
+        #Navigates to the supporting documents section to find the download link.
+        rec_url = driver.current_url
         record_info = driver.find_element(By.CLASS_NAME, "selected")
         supp_documents = driver.find_element(By.CLASS_NAME, "dropdown-menu")
-        #actions.click(record_info).click(supp_documents).perform()
         record_info.click()
         supp_documents.click()
 
+        #Finds element containing download link and clicks it
         download_link = driver.find_element(By.ID, "ctl00_PlaceHolderMain_attachmentEdit_iframeAttachmentList")
-        dl_page = driver.get(download_link.get_property('src'))
+        driver.get(download_link.get_property('src'))
 
         download_link = driver.find_element(By.ID, 'attachmentList_gdvAttachmentList_ctl02_lblName')
-        #actions.click(download_link).perform()
         download_link.click()
         time.sleep(3)
-    
+
         driver.quit()
-        return(f'Downloaded {VONum}.')
-        #return(webbrowser.open(rec_url))
+        #return(f'Downloaded {VONum}.')
+        
+        a = webbrowser.get(rec_url)
+        return(a.open(rec_url, new = 2, autoraise=True))
+
     
     except Exception as e:
         # Handle any exceptions that occur
