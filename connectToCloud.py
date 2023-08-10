@@ -1,12 +1,10 @@
-from flask import Flask, request, redirect, Response
+from flask import Flask, request
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.service import Service
 import platform
-import webbrowser
 
 import time
 import os
@@ -17,9 +15,13 @@ print(platform.system())
 chrome_options = webdriver.ChromeOptions()
 
 driver_path = os.environ.get("CHROMEDRIVER_PATH")
-#driver_octal = os.chmod(driver_path, 0o755)
-#chrome_service = Service(executable_path = driver_octal)
+if platform.system() == "Linux":
+    driver_octal = os.chmod(driver_path, 0o755)
+    chrome_service = Service(executable_path = driver_octal)
+else:
+    chrome_service = None
 
+chrome_options = Options()
 chrome_options.binary_location = str(os.environ.get("GOOGLE_CHROME_BIN"))
 chrome_options.add_argument("--headless=new")
 chrome_options.add_argument("--disable-dev-shm-usage")
@@ -31,8 +33,7 @@ chrome_options.add_argument('--disable-infobars')
 @app.route("/", methods=["GET", "POST"])
 
 def main():
-    #driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
-    driver = webdriver.Chrome(options=chrome_options)
+    driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
 
     keyName = 'VO'
     VONum = request.args.get(keyName)
