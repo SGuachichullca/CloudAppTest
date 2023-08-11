@@ -1,6 +1,5 @@
 from flask import Flask, request
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
@@ -42,15 +41,16 @@ def main():
         #Opens fires.fdnycloud.org.
         driver.get('https://fires.fdnycloud.org/CitizenAccess/Cap/CapHome.aspx?module=BFP&TabName=BFP')
 
-        #Sends violation number stored in the key parameter into the fdnycloud.org violations search and returns the associated record.
+        #Sends violation number stored in the key parameter into the fdnycloud.org violations search and stores the associated record's URL.
         search_bar = driver.find_element(By.NAME, "ctl00$PlaceHolderMain$generalSearchForm$txtGSPermitNumber")
         search_bar.click()
         search_bar.send_keys(VONum)
         search_bar.send_keys(Keys.ENTER)
-        time.sleep(3)
+        #time.sleep(3)
+        rec_url = driver.current_url
+
 
         #Navigates to the supporting documents section to find the download link.
-        rec_url = driver.current_url
         '''record_info = driver.find_element(By.CLASS_NAME, "selected")
         supp_documents = driver.find_element(By.CLASS_NAME, "dropdown-menu")
         record_info.click()
