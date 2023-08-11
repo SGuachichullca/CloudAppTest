@@ -20,7 +20,6 @@ else:
     chrome_service = None
 
 w = webbrowser.Chrome(str(os.environ.get("GOOGLE_CHROME_BIN")))
-
 chrome_options = webdriver.ChromeOptions()
 chrome_options.binary_location = str(os.environ.get("GOOGLE_CHROME_BIN"))
 chrome_options.add_argument("--headless=new")
@@ -33,18 +32,13 @@ chrome_options.add_argument('--disable-infobars')
 @app.route("/", methods=["GET"])
 
 def main():
+    
     driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
 
     keyName = 'VO'
     VONum = request.args.get(keyName)
     try:
 
-        '''driver.get("https://stackoverflow.com/")
-        src = driver.page_source
-        driver.quit()
-        print("Done.")
-        return(src)'''
-        
         #Opens fires.fdnycloud.org.
         driver.get('https://fires.fdnycloud.org/CitizenAccess/Cap/CapHome.aspx?module=BFP&TabName=BFP')
 
@@ -73,8 +67,19 @@ def main():
         driver.quit()
         #return(f'Downloaded {VONum}.')
         
-        a = webbrowser.get(rec_url)
-        return(a.open(rec_url, new = 2, autoraise=True))
+        response_content = f'''
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta http-equiv="refresh" content="0;url={rec_url}">
+            </head>
+            <body>
+                Redirecting...
+            </body>
+            </html>
+        '''
+        return(response_content)
+        #return(webbrowser.open(rec_url, new = 0, autoraise=True))
 
     
     except Exception as e:
