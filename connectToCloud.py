@@ -51,7 +51,7 @@ def main():
 
         #Navigates to the supporting documents section to find the download link.
         rec_url = driver.current_url
-        record_info = driver.find_element(By.CLASS_NAME, "selected")
+        '''record_info = driver.find_element(By.CLASS_NAME, "selected")
         supp_documents = driver.find_element(By.CLASS_NAME, "dropdown-menu")
         record_info.click()
         supp_documents.click()
@@ -62,7 +62,7 @@ def main():
 
         download_link = driver.find_element(By.ID, 'attachmentList_gdvAttachmentList_ctl02_lblName')
         download_link.click()
-        time.sleep(3)
+        time.sleep(3)'''
 
         driver.quit()
         #return(f'Downloaded {VONum}.')
@@ -74,7 +74,7 @@ def main():
                 <meta http-equiv="refresh" content="0;url={rec_url}">
             </head>
             <body>
-                Redirecting...
+                Redirecting....
             </body>
             </html>
         '''
