@@ -1,1 +1,1 @@
-web: gunicorn connectToCloud Pyppeteer:app
+web: gunicorn connectToCloudPyppeteer:app
